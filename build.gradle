@@ -1,0 +1,61 @@
+plugins {
+	id 'org.springframework.boot' version '2.3.5.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+	id 'java'
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+
+allprojects {
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
+    group = 'com.yangzl'
+    version = '1.0-SNAPSHOT'
+    sourceCompatibility = '1.8'
+
+    apply plugin: 'java'
+    // spring 插件
+    apply plugin: 'org.springframework.boot'
+    // spring依赖管理
+    apply plugin: 'io.spring.dependency-management'
+}
+
+subprojects {
+
+    ext {
+        set('springCloudVersion', "Hoxton.SR8")
+        set('springCloudAlibabaVersion', "2.2.0.RELEASE")
+    }
+
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+        implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+        compileOnly 'org.projectlombok:lombok'
+        developmentOnly 'org.springframework.boot:spring-boot-devtools'
+        annotationProcessor 'org.projectlombok:lombok'
+        testImplementation('org.springframework.boot:spring-boot-starter-test') {
+            exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+        }
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+            mavenBom "com.alibaba.cloud:spring-cloud-alibaba-dependencies:${springCloudAlibabaVersion}"
+        }
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+
+}

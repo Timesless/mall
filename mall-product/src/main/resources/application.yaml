@@ -1,0 +1,6 @@
+server:
+    port: 7076
+
+spring:
+    application:
+        name: mall-product

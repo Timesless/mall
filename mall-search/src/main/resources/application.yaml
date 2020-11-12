@@ -1,0 +1,6 @@
+server:
+    port: 7077
+
+spring:
+    application:
+        name: mall-search

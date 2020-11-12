@@ -1,0 +1,9 @@
+server:
+    port: 7071
+
+spring:
+    application:
+        name: mall-coupon
+
+
+

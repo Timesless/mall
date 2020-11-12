@@ -1,0 +1,6 @@
+server:
+    port: 7079
+
+spring:
+    application:
+        name: mall-ware

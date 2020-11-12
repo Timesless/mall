@@ -1,0 +1,7 @@
+server:
+    port: 7073
+
+spring:
+    application:
+        name: mall-member
+

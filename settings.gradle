@@ -1,0 +1,16 @@
+rootProject.name = 'mall'
+
+include 'mall-product'
+include 'mall-coupon'
+include 'mall-member'
+include 'mall-ware'
+include 'mall-order'
+include 'mall-seckill'
+include 'mall-gateway'
+include 'mall-search'
+include 'mall-cart'
+include 'mall-pay'
+
+include 'renren-fast'
+include 'renren-generator'
+
