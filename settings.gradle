@@ -13,4 +13,5 @@ include 'mall-pay'
 
 include 'renren-fast'
 include 'renren-generator'
+include 'mall-common'
 
