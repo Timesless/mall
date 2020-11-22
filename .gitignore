@@ -28,6 +28,10 @@ hs_err_pid*
 
 #### gradle.ignore
 
+# TODO
+renren-fast/**
+renren-generator/**
+
 .gradle
 **/build/
 !src/**/build/

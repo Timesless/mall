@@ -1,10 +1,32 @@
 
+/*apply plugin: 'io.spring.dependency-management'*/
+
 
 dependencies {
 
+    runtime 'mysql:mysql-connector-java:8.0.22'
+
     implementation 'commons-lang:commons-lang:2.6'
 
-    compile 'com.baomidou:mybatis-plus-boot-starter:3.4.0'
-    compile 'com.github.pagehelper:pagehelper-spring-boot-starter:1.3.0'
+    // 排除掉低版本的springboot starter
+    implementation 'org.springframework.boot:spring-boot-starter-web:2.3.5.RELEASE'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc:2.3.5.RELEASE'
+
+
+    compile('com.baomidou:mybatis-plus-boot-starter:3.4.0') {
+        exclude(group: 'org.springframework.boot', module:'spring-boot-starter-jdbc')
+    }
+    compile('com.github.pagehelper:pagehelper-spring-boot-starter:1.3.0') {
+        exclude(group: 'org.springframework.boot', module:'spring-boot-starter-web')
+    }
 }
+
+
+/* 已经在父项目中引入，无需单独引入
+dependencyManagement {
+    imports {
+        mavenBom "com.alibaba.cloud:spring-cloud-alibaba-dependencies:2.2.1.RELEASE"
+    }
+}*/
+
 

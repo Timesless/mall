@@ -2,10 +2,9 @@ package com.yangzl.mall.product.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
-import lombok.Data;
 
 /**
  * 商品属性
@@ -17,6 +16,7 @@ import lombok.Data;
 @Data
 @TableName("pms_attr")
 public class AttrEntity implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
 	/**

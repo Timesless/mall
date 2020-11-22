@@ -1,6 +1,0 @@
-server:
-    port: 7078
-
-spring:
-    application:
-        name: mall-seckill

@@ -1,8 +1,10 @@
 package com.yangzl.mall.coupon;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * @author yangzl
@@ -12,6 +14,8 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @EnableDiscoveryClient
 @SpringBootApplication
+@EnableTransactionManagement
+@MapperScan(basePackages = "com.yangzl.mall.coupon.dao")
 public class CouponApplication7071 {
 
     public static void main(String[] args) {
