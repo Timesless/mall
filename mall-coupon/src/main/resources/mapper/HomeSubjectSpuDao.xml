@@ -4,7 +4,7 @@
 <mapper namespace="com.yangzl.mall.seckill.dao.HomeSubjectSpuDao">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.yangzl.mall.seckill.entity.HomeSubjectSpuEntity" id="homeSubjectSpuMap">
+    <resultMap type="com.yangzl.mall.coupon.entity.HomeSubjectSpuEntity" id="homeSubjectSpuMap">
         <result property="id" column="id"/>
         <result property="name" column="name"/>
         <result property="subjectId" column="subject_id"/>

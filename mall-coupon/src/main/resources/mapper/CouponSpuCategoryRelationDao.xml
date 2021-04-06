@@ -4,7 +4,7 @@
 <mapper namespace="com.yangzl.mall.seckill.dao.CouponSpuCategoryRelationDao">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.yangzl.mall.seckill.entity.CouponSpuCategoryRelationEntity" id="couponSpuCategoryRelationMap">
+    <resultMap type="com.yangzl.mall.coupon.entity.CouponSpuCategoryRelationEntity" id="couponSpuCategoryRelationMap">
         <result property="id" column="id"/>
         <result property="couponId" column="coupon_id"/>
         <result property="categoryId" column="category_id"/>

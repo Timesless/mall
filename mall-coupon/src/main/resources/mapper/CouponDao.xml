@@ -4,7 +4,7 @@
 <mapper namespace="com.yangzl.mall.seckill.dao.CouponDao">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.yangzl.mall.seckill.entity.CouponEntity" id="couponMap">
+    <resultMap type="com.yangzl.mall.coupon.entity.CouponEntity" id="couponMap">
         <result property="id" column="id"/>
         <result property="couponType" column="coupon_type"/>
         <result property="couponImg" column="coupon_img"/>

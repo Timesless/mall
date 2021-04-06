@@ -1,6 +1,0 @@
-server:
-    port: 7075
-
-spring:
-    application:
-        name: mall-pay

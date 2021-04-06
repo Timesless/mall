@@ -4,7 +4,7 @@
 <mapper namespace="com.yangzl.mall.seckill.dao.HomeAdvDao">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.yangzl.mall.seckill.entity.HomeAdvEntity" id="homeAdvMap">
+    <resultMap type="com.yangzl.mall.coupon.entity.HomeAdvEntity" id="homeAdvMap">
         <result property="id" column="id"/>
         <result property="name" column="name"/>
         <result property="pic" column="pic"/>

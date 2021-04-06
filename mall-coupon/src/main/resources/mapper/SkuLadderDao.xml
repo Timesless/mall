@@ -4,7 +4,7 @@
 <mapper namespace="com.yangzl.mall.seckill.dao.SkuLadderDao">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.yangzl.mall.seckill.entity.SkuLadderEntity" id="skuLadderMap">
+    <resultMap type="com.yangzl.mall.coupon.entity.SkuLadderEntity" id="skuLadderMap">
         <result property="id" column="id"/>
         <result property="skuId" column="sku_id"/>
         <result property="fullCount" column="full_count"/>

@@ -1,4 +1,8 @@
 
+configurations {
+    compile.exclude(module: 'spring-boot-starter-web')
+    compile.exclude(module: 'spring-cloud-starter-openfeign')
+}
 
 dependencies {
 

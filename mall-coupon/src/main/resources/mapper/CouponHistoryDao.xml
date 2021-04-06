@@ -4,7 +4,7 @@
 <mapper namespace="com.yangzl.mall.seckill.dao.CouponHistoryDao">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.yangzl.mall.seckill.entity.CouponHistoryEntity" id="couponHistoryMap">
+    <resultMap type="com.yangzl.mall.coupon.entity.CouponHistoryEntity" id="couponHistoryMap">
         <result property="id" column="id"/>
         <result property="couponId" column="coupon_id"/>
         <result property="memberId" column="member_id"/>

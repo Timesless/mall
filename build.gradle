@@ -44,6 +44,7 @@ allprojects {
 
 subprojects {
 
+    // 排除common
     if (!it.name.contains('common')) {
         // spring 插件
         apply plugin: 'org.springframework.boot'
@@ -51,14 +52,18 @@ subprojects {
         apply plugin: 'io.spring.dependency-management'
 
         ext {
-            set('springCloudVersion', "Hoxton.SR8")
-            set('springCloudAlibabaVersion', "2.2.1.RELEASE")
+            springCloudVersion = "Hoxton.SR8"
+            springCloudAlibabaVersion = "2.2.1.RELEASE"
+            aliCloudVersion = "1.0.0"
+
         }
 
         dependencies {
             implementation 'org.springframework.boot:spring-boot-starter-web'
             implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
             implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
+            implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
+
             compileOnly 'org.projectlombok:lombok'
             developmentOnly 'org.springframework.boot:spring-boot-devtools'
             annotationProcessor 'org.projectlombok:lombok'
@@ -71,6 +76,7 @@ subprojects {
             imports {
                 mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
                 mavenBom "com.alibaba.cloud:spring-cloud-alibaba-dependencies:${springCloudAlibabaVersion}"
+                mavenBom "com.alibaba.cloud:aliyun-spring-boot-dependencies:${aliCloudVersion}"
             }
         }
     }
@@ -78,6 +84,10 @@ subprojects {
 
     test {
         useJUnitPlatform()
+
+        doFirst {
+            jvmArgs("-Xms512m", "-Xmx512m")
+        }
     }
 
 }

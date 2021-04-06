@@ -4,7 +4,7 @@
 <mapper namespace="com.yangzl.mall.seckill.dao.HomeSubjectDao">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.yangzl.mall.seckill.entity.HomeSubjectEntity" id="homeSubjectMap">
+    <resultMap type="com.yangzl.mall.coupon.entity.HomeSubjectEntity" id="homeSubjectMap">
         <result property="id" column="id"/>
         <result property="name" column="name"/>
         <result property="title" column="title"/>

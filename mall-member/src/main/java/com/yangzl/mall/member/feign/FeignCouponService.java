@@ -7,9 +7,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 /**
  * @author yangzl
  * @date 2020/11/22 21:57
- * @desc
+ * @desc feign 使用
+ *      1. 引入 open-feign
+ *      2. 编写接口，指定要调用哪个模块的服务（nacos中以 spring.application.name 区分）
+ *      3. 编写方法（同 controller 写法）
+ *      4. @EnableFeignClients
  */
-
 @FeignClient("mall-coupon")
 public interface FeignCouponService {
 

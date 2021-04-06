@@ -1,0 +1,39 @@
+server:
+  port: 88
+
+spring:
+  application:
+    name: mall-gateway
+
+
+  cloud:
+    gateway:
+      routes:
+        # 规则 id
+        - id: baidu_route
+          uri: https://www.baidu.com
+          predicates:
+            - Query=url,baidu
+        # 商品服务
+        - id: product_route
+          uri: lb://mall-product
+          predicates:
+            - Path=/api/product/**
+          filters:
+            - RewritePath=/api/product(?<segment>/?.*),/$\{segment}
+        # 第三方服务
+        - id: third_route
+          uri: lb://mall-third
+          predicates:
+            - Path=/api/third/**
+          filters:
+            - RewritePath=/api/third(?<segment>/?.*),/$\{segment}
+
+        # 后台管理系统（低优先级放在最后匹配）
+        - id: admin_route
+          uri: lb://renren-fast
+          predicates:
+            - Path=/api/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/renren-fast/$\{segment}
+

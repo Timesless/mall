@@ -4,7 +4,7 @@
 <mapper namespace="com.yangzl.mall.seckill.dao.SeckillSkuNoticeDao">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.yangzl.mall.seckill.entity.SeckillSkuNoticeEntity" id="seckillSkuNoticeMap">
+    <resultMap type="com.yangzl.mall.coupon.entity.SeckillSkuNoticeEntity" id="seckillSkuNoticeMap">
         <result property="id" column="id"/>
         <result property="memberId" column="member_id"/>
         <result property="skuId" column="sku_id"/>

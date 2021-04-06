@@ -4,7 +4,7 @@
 <mapper namespace="com.yangzl.mall.seckill.dao.SeckillPromotionDao">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.yangzl.mall.seckill.entity.SeckillPromotionEntity" id="seckillPromotionMap">
+    <resultMap type="com.yangzl.mall.coupon.entity.SeckillPromotionEntity" id="seckillPromotionMap">
         <result property="id" column="id"/>
         <result property="title" column="title"/>
         <result property="startTime" column="start_time"/>

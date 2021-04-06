@@ -4,7 +4,7 @@
 <mapper namespace="com.yangzl.mall.seckill.dao.SeckillSkuRelationDao">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.yangzl.mall.seckill.entity.SeckillSkuRelationEntity" id="seckillSkuRelationMap">
+    <resultMap type="com.yangzl.mall.coupon.entity.SeckillSkuRelationEntity" id="seckillSkuRelationMap">
         <result property="id" column="id"/>
         <result property="promotionId" column="promotion_id"/>
         <result property="promotionSessionId" column="promotion_session_id"/>

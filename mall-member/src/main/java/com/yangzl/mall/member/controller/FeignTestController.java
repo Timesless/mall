@@ -14,10 +14,9 @@ import javax.annotation.Resource;
  * @date 2020/11/22 23:10
  * @desc 测试
  */
-
 @RestController
 @RequestMapping("user/test/")
-public class TestController {
+public class FeignTestController {
 
     @Resource
     private FeignCouponService feignCouponService;
@@ -29,7 +28,8 @@ public class TestController {
         member.setNickname("yangzl");
         member.setCity("成都");
 
-        return R.ok().put("meber", member).put("coupon", r.get("coupon"));
+        return R.ok()
+            .put("meber", member).put("coupon", r.get("coupon"));
     }
 
 }

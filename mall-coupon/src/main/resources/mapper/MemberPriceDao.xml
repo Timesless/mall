@@ -4,7 +4,7 @@
 <mapper namespace="com.yangzl.mall.seckill.dao.MemberPriceDao">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.yangzl.mall.seckill.entity.MemberPriceEntity" id="memberPriceMap">
+    <resultMap type="com.yangzl.mall.coupon.entity.MemberPriceEntity" id="memberPriceMap">
         <result property="id" column="id"/>
         <result property="skuId" column="sku_id"/>
         <result property="memberLevelId" column="member_level_id"/>

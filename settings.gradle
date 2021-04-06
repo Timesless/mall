@@ -9,8 +9,9 @@ include 'mall-gateway'
 include 'mall-search'
 include 'mall-cart'
 include 'mall-pay'
-
 include 'renren-fast'
-include 'renren-generator'
+
+// include 'renren-generator'
 include 'mall-common'
+include 'mall-third'
 

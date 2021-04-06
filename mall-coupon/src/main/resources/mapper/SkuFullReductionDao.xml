@@ -4,7 +4,7 @@
 <mapper namespace="com.yangzl.mall.seckill.dao.SkuFullReductionDao">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.yangzl.mall.seckill.entity.SkuFullReductionEntity" id="skuFullReductionMap">
+    <resultMap type="com.yangzl.mall.coupon.entity.SkuFullReductionEntity" id="skuFullReductionMap">
         <result property="id" column="id"/>
         <result property="skuId" column="sku_id"/>
         <result property="fullPrice" column="full_price"/>

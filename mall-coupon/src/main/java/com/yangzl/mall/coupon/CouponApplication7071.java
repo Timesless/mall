@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @date 2020/11/9 14:24
  * @desc 优惠系统
  */
-
 @EnableDiscoveryClient
 @SpringBootApplication
 @EnableTransactionManagement
