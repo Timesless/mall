@@ -1,0 +1,35 @@
+server:
+  port: 30000
+
+  # tomcat服务器配置
+  tomcat:
+    threads:
+      max: 128
+      min-spare: 4
+    uri-encoding: UTF-8
+
+# aliyun OSS 配置
+alibaba:
+  cloud:
+    access-key: LTAI5t5i2CF3vnosEsZvNq83
+    secret-key: Jz90M0TyxHpx4rgnuoKiEDZuoG4dmy
+    oss:
+      endpoint: oss-cn-chengdu.aliyuncs.com
+
+      buket: yangzl
+
+spring:
+  application:
+    name: mall-third
+  # spring 线程池配置
+  task:
+    execution:
+      pool:
+        core-size: 4
+        max-size: 16
+
+  # nacos 配置
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848

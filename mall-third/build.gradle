@@ -1,0 +1,7 @@
+
+
+dependencies {
+    compile 'com.alibaba.cloud:aliyun-oss-spring-boot-starter'
+
+    compile project(':mall-common')
+}

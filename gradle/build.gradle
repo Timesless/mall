@@ -1,0 +1,127 @@
+
+/*
+    如果想在build.gradle中使用第三方包
+    StringUtils.isEmpty()
+ */
+buildscript {
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'org.apache.commons:commons-lang3:3.9'
+    }
+}
+
+// =================================================================
+// divide
+// =================================================================
+
+plugins {
+    id 'java'
+}
+
+group 'com.yangzl'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+/*
+
+gradle 生命周期
+    1. Initialization
+        读取settings.gradle，确定哪些项目参与构建，为每个参与构建的项目创建Project instance
+    2. Configure
+        不执行构建，只配置（解释执行build.gradle）
+    3. Execution
+        执行Configure的任务
+
+gradle api
+
+    1. Project
+    2. Task
+ */
+
+// 闭包作为最后一个参数可以写在括号外面
+task("hello gradle") {
+    // 这个语句运行在confiure阶段
+    println("==== configuring ====")
+
+    // 这个语句在任务运行时运行
+    // Configure时，只是将该闭包添加到任务的动作列表的最前面，并不实际执行
+    doFirst {
+        println('hello Executing first')
+    }
+
+    doLast {
+        println('hello Executing last')
+    }
+}
+
+// 定义4个任务
+// gradle task2
+// gradlew task2
+(0..<5).each { i ->
+    task('task' + i) {
+        // 偶数任务依赖 hello gradle 任务
+        if ((i & 1) == 0) {
+            dependsOn('hello gradle')
+        }
+        def captureI = i
+        doLast {
+            println("Excuting task" + captureI)
+        }
+    }
+}
+
+/*
+    钩子函数
+    任何无主的函数，gradle都在Project api中查找
+
+    解释执行完build.gradle触发afterEvaluate hook
+ */
+afterEvaluate {
+    println('----- after evaluate -----')
+}
+
+/*
+    gradle插件编写
+
+    1. build.gradle class MyPlugin implements Plugin<Project> {}
+    2. user.dir/buildSrc/src/main/java/MyPlugin2 implements <Project> {}
+
+    apply plugin: MyPlugin
+    apply plugin: MyPlugin2
+ */
+class MyPlugin implements Plugin<Project> {
+    @Override
+    void apply(Project project) {
+        (5..<10).each { i ->
+            project.task('task' + i) {
+                println('....plugin task' + i +' configure....')
+                // 闭包的延迟执行需捕获外部变量
+                def captureI = i
+                doLast {
+                    println("Excuting task" + captureI)
+                }
+            }
+        }
+    }
+}
+
+/*
+    语法糖 apply plugin: MyPlugin
+    desugar，本质等价于
+    apply([plugin: MyPlugin])
+
+    当参数是map时，可以省略[]
+    当不产生歧义时，方法调用的()可以省略
+ */
+apply plugin: MyPlugin
+apply plugin: MyPlugin2
+
+
+
+
