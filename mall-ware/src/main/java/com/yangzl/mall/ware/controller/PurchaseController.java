@@ -4,14 +4,13 @@ import com.yangzl.common.utils.PageUtils;
 import com.yangzl.common.utils.R;
 import com.yangzl.mall.ware.entity.PurchaseEntity;
 import com.yangzl.mall.ware.service.PurchaseService;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import com.yangzl.mall.ware.vo.MergeVo;
+import com.yangzl.mall.ware.vo.PurchaseDoneVo;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 
@@ -29,6 +28,58 @@ public class PurchaseController {
     private PurchaseService purchaseService;
 
     /**
+     * 查询未被领取的采购单
+     *
+     * @param params param
+     * @return R
+     */
+    @GetMapping("/unreceive/list")
+    public R unreceiveList(@RequestParam Map<String, Object> params) {
+        PageUtils page = purchaseService.queryUnreceivePage(params);
+
+        return R.ok().put("page", page);
+    }
+
+    /**
+     * 合并采购单
+     *
+     * @param mergeVo mergovo
+     * @return R
+     */
+    @PostMapping("merge")
+    public R mergePurchase(@RequestBody MergeVo mergeVo) {
+        purchaseService.mergePurchase(mergeVo);
+
+        return R.ok();
+    }
+
+    /**
+     * 领取采购单
+     *
+     * @param ids ids
+     * @return R
+     */
+    @PostMapping("receive")
+    public R receivePurchase(@RequestParam List<Long> ids) {
+        purchaseService.receivePurchase(ids);
+
+        return R.ok();
+    }
+
+    /**
+     * 完成采购单
+     *
+     * @param purchaseDoneVo done
+     * @return R
+     */
+    @PostMapping("finish")
+    public R finishPurchase(@RequestBody PurchaseDoneVo purchaseDoneVo) {
+        purchaseService.done(purchaseDoneVo);
+
+        return R.ok();
+    }
+
+    /**
      * 列表
      */
     @RequestMapping("/list")
@@ -37,7 +88,6 @@ public class PurchaseController {
 
         return R.ok().put("page", page);
     }
-
 
     /**
      * 信息

@@ -28,8 +28,7 @@ public class FeignTestController {
         member.setNickname("yangzl");
         member.setCity("成都");
 
-        return R.ok()
-            .put("meber", member).put("coupon", r.get("coupon"));
+        return R.ok().put("meber", member).put("coupon", r.get("coupon"));
     }
 
 }

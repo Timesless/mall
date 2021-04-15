@@ -67,6 +67,26 @@
 
 
 ## 初级篇
+1. 分布式基础概念
++ 微服务
++ 注册中心「Nacos」
++ 配置中心「Nacos」
++ 远程调用「Feign + Ribbon」
++ 网关「SpringCloud Gateway」
+
+2. 基础开发
+SpringBoot2.0 SpringCloud，MyBatisPlus，Vue组件化
+
+3. 环境
+Docker，MySQL，Redis，逆向工程「人人开源」
+   
+4. 开发规范
++ 数据校验「JSR303」
++ Spring MVC 统一异常处理「@ControllerAdvice + @ExceptionHandler」
++ 响应统一封装「R」
++ 跨域统一解决「在网关配置跨域」
++ VO / TO / PO
++ common 抽取
 
 
 ### 中间件安装

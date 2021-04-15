@@ -2,16 +2,16 @@ package com.yangzl.mall.product.controller;
 
 import com.yangzl.common.utils.PageUtils;
 import com.yangzl.common.utils.R;
+import com.yangzl.mall.product.entity.AttrEntity;
 import com.yangzl.mall.product.entity.AttrGroupEntity;
 import com.yangzl.mall.product.service.AttrGroupService;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import com.yangzl.mall.product.service.AttrService;
+import com.yangzl.mall.product.vo.AttrGroupRelationVO;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 
@@ -27,6 +27,45 @@ import java.util.Map;
 public class AttrGroupController {
     @Resource
     private AttrGroupService attrGroupService;
+    @Resource
+    private AttrService attrService;
+
+    // /product/attrgroup/{attrgourpId}/attr/relation
+    @GetMapping("/{attrgroupId}/attr/relation")
+    public R attrRelation(@PathVariable Long attrgroupId) {
+        List<AttrEntity> list = attrService.getRelationAttr(attrgroupId);
+
+        return R.ok().put("data", list);
+    }
+
+    // /product/attrgroup/{attrgroupId}/noattr/relation
+    @GetMapping("/{attrgroupId}/attr/relation")
+    public R attrNoRelation(@PathVariable Long attrgroupId,
+                            @RequestParam Map<String, Object> params) {
+        PageUtils page = attrService.getNoRelationAttr(attrgroupId, params);
+
+        return R.ok().put("page", page);
+    }
+
+    // /product/attrgroup/attr/relation/delete
+    @DeleteMapping("/attr/relation/delete")
+    public R deleteRelation(@RequestBody List<AttrGroupRelationVO> vos) {
+        attrService.deleteRelation(vos);
+
+        return R.ok();
+    }
+
+    /**
+     * 根据分类查询列表
+     */
+    @RequestMapping("/list/{catelogId}")
+    public R listByCatelogId(@RequestParam Map<String, Object> params,
+                             @PathVariable Long catelogId) {
+        PageUtils page = attrGroupService.queryPage(params, catelogId);
+        return R.ok().put("data", page);
+    }
+
+    // ========
 
     /**
      * 列表
@@ -37,7 +76,6 @@ public class AttrGroupController {
 
         return R.ok().put("page", page);
     }
-
 
     /**
      * 信息

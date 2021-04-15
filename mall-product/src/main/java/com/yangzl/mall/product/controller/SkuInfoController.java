@@ -29,6 +29,16 @@ public class SkuInfoController {
     private SkuInfoService skuInfoService;
 
     /**
+     * 条件查询：list by condition
+     */
+    @RequestMapping("/listByCondition")
+    public R listByCondition(@RequestParam Map<String, Object> params){
+        PageUtils page = skuInfoService.queryByCondition(params);
+
+        return R.ok().put("page", page);
+    }
+
+    /**
      * 列表
      */
     @RequestMapping("/list")
@@ -37,7 +47,6 @@ public class SkuInfoController {
 
         return R.ok().put("page", page);
     }
-
 
     /**
      * 信息
@@ -51,10 +60,12 @@ public class SkuInfoController {
 
     /**
      * 保存
+     * public R save(@RequestBody SkuInfoEntity skuInfo)
      */
     @RequestMapping("/save")
     public R save(@RequestBody SkuInfoEntity skuInfo){
-		skuInfoService.save(skuInfo);
+		/// skuInfoService.save(skuInfo);
+        // skuInfoService.saveSkuInfo(skuInfo);
 
         return R.ok();
     }

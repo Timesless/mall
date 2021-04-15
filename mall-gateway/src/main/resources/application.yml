@@ -9,7 +9,7 @@ spring:
   cloud:
     gateway:
       routes:
-        # 规则 id
+        # 测试
         - id: baidu_route
           uri: https://www.baidu.com
           predicates:
@@ -20,14 +20,31 @@ spring:
           predicates:
             - Path=/api/product/**
           filters:
-            - RewritePath=/api/product(?<segment>/?.*),/$\{segment}
+            - RewritePath=/api/(?<segment>/?.*),/$\{segment}
+
         # 第三方服务
         - id: third_route
           uri: lb://mall-third
           predicates:
             - Path=/api/third/**
           filters:
-            - RewritePath=/api/third(?<segment>/?.*),/$\{segment}
+            - RewritePath=/api/(?<segment>/?.*),/$\{segment}
+
+        # member 系统路由
+        - id: member-route
+          uri: lb://mall-member
+          predicates:
+            - Path=/api/member/**
+          filters:
+            - RewritePath=/api/(?<segment>/?.*),/$\{segment}
+
+        # ware 库存系统路由
+        - id: ware-route
+          uri: lb://mall-ware
+          predicates:
+            - Path=/api/ware/**
+          filters:
+            - RewritePath=/api/(?<segment>/?.*),/$\{segment}
 
         # 后台管理系统（低优先级放在最后匹配）
         - id: admin_route
@@ -36,4 +53,5 @@ spring:
             - Path=/api/**
           filters:
             - RewritePath=/api/(?<segment>.*),/renren-fast/$\{segment}
+
 

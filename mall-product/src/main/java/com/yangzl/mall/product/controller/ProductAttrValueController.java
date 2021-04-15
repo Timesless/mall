@@ -39,7 +39,6 @@ public class ProductAttrValueController {
         return R.ok().put("page", page);
     }
 
-
     /**
      * 信息
      */

@@ -2,17 +2,19 @@ package com.yangzl.mall.product.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
-import lombok.Data;
 
 /**
  * 品牌
  *
  * @author yangzl
  * @date 2020/11/19 20:27:08
- * @desc
+ * @desc 添加校验，校验不通过将得到一个 400 异常
+ *      1. 普通校验
+ *      2. 分组校验
+ *      3. 自定义校验
  */
 @Data
 @TableName("pms_brand")

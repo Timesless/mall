@@ -60,6 +60,7 @@ public class CategoryEntity implements Serializable {
 
     /**
      * 子节点，非数据库字段
+     * @ JsonInclude 空值时可以选择是否序列化
      */
     @TableField(exist = false)
 	private List<CategoryEntity> children;

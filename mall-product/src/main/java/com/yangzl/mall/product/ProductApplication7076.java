@@ -13,11 +13,11 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @desc 商品系统
  */
 
-@EnableFeignClients
 @EnableDiscoveryClient
 @SpringBootApplication
 @EnableTransactionManagement
 @MapperScan(basePackages = "com.yangzl.mall.product.dao")
+@EnableFeignClients(basePackages = "com.yangzl.mall.product.feign")
 public class ProductApplication7076 {
 
     public static void main(String[] args) {

@@ -8,9 +8,6 @@ server:
       min-spare: 8
     uri-encoding: UTF-8
 
-  servlet:
-    context-path: /ware
-
 spring:
   application:
     name: mall-ware

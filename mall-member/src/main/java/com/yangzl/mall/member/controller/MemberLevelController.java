@@ -39,7 +39,6 @@ public class MemberLevelController {
         return R.ok().put("page", page);
     }
 
-
     /**
      * 信息
      */

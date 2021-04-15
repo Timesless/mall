@@ -45,6 +45,10 @@ spring:
       discovery:
         server-addr: 127.0.0.1:8848
 
+  # jackson 序列化配置
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+
 # mybatis-plus 配置
 mybatis-plus:
   # 默认路径 ant风格路径通配符
@@ -54,3 +58,8 @@ mybatis-plus:
     banner: false
     db-config:
       id-type: auto
+
+# 日志配置
+logging:
+  level:
+    com.yangzl.mall.product.dao: debug

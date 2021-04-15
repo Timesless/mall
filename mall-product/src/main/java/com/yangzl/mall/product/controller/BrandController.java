@@ -4,13 +4,10 @@ import com.yangzl.common.utils.PageUtils;
 import com.yangzl.common.utils.R;
 import com.yangzl.mall.product.entity.BrandEntity;
 import com.yangzl.mall.product.service.BrandService;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.Map;
 
@@ -50,11 +47,21 @@ public class BrandController {
     }
 
     /**
-     * 保存
+     * 保存，添加参数校验
+     *      1. 使用 BindingResult 判断是否有异常
+     *      2. 使用 Spring 统一异常处理 ControllerAdvice
+     *  public R save(@Valid @RequestBody BrandEntity brand, BindingResult result){
+     *         if (result.hasErrors()) {
+     *             return R.error(400, "提交参数异常").put("error", result.getAllErrors());
+     *         }
+     * 		brandService.save(brand);
+     *
+     *         return R.ok();
+     *  }
      */
     @RequestMapping("/save")
-    public R save(@RequestBody BrandEntity brand){
-		brandService.save(brand);
+    public R save(@Valid @RequestBody BrandEntity brand){
+        brandService.save(brand);
 
         return R.ok();
     }
@@ -64,7 +71,8 @@ public class BrandController {
      */
     @RequestMapping("/update")
     public R update(@RequestBody BrandEntity brand){
-		brandService.updateById(brand);
+		// brandService.updateById(brand);
+        brandService.updateCascade(brand);
 
         return R.ok();
     }

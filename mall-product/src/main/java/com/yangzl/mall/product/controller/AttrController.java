@@ -2,13 +2,10 @@ package com.yangzl.mall.product.controller;
 
 import com.yangzl.common.utils.PageUtils;
 import com.yangzl.common.utils.R;
-import com.yangzl.mall.product.entity.AttrEntity;
 import com.yangzl.mall.product.service.AttrService;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import com.yangzl.mall.product.vo.AttrRespVO;
+import com.yangzl.mall.product.vo.AttrVO;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.Arrays;
@@ -28,6 +25,22 @@ public class AttrController {
     @Resource
     private AttrService attrService;
 
+    @GetMapping("/base/list/{catelogId}")
+    public R baseCatelogList(@RequestParam Map<String, Object> params, @PathVariable Long catelogId){
+        PageUtils page = attrService.queryAttrBaseInfoPage(params, catelogId);
+
+        return R.ok().put("page", page);
+    }
+
+    @GetMapping("/sale/list/{catelogId}")
+    public R saleCatelogList(@RequestParam Map<String, Object> params, @PathVariable Long catelogId){
+        PageUtils page = attrService.queryAttrSaleInfoPage(params, catelogId);
+
+        return R.ok().put("page", page);
+    }
+
+    // =========
+
     /**
      * 列表
      */
@@ -38,13 +51,13 @@ public class AttrController {
         return R.ok().put("page", page);
     }
 
-
     /**
      * 信息
      */
     @RequestMapping("/info/{attrId}")
     public R info(@PathVariable("attrId") Long attrId){
-		AttrEntity attr = attrService.getById(attrId);
+		// AttrEntity attr = attrService.getById(attrId);
+        AttrRespVO attr = attrService.getAttrInfoById(attrId);
 
         return R.ok().put("attr", attr);
     }
@@ -53,8 +66,9 @@ public class AttrController {
      * 保存
      */
     @RequestMapping("/save")
-    public R save(@RequestBody AttrEntity attr){
-		attrService.save(attr);
+    public R save(@RequestBody AttrVO attr){
+		// attrService.save(attr);
+        attrService.saveAttr(attr);
 
         return R.ok();
     }
@@ -63,8 +77,9 @@ public class AttrController {
      * 修改
      */
     @RequestMapping("/update")
-    public R update(@RequestBody AttrEntity attr){
-		attrService.updateById(attr);
+    public R update(@RequestBody AttrVO attr){
+		// attrService.updateById(attr);
+        attrService.updateCascade(attr);
 
         return R.ok();
     }
