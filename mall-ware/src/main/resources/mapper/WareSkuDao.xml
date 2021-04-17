@@ -13,5 +13,11 @@
         <result property="stockLocked" column="stock_locked"/>
     </resultMap>
 
+    <select id="getStockBySkuIds" resultType="java.lang.Long">
+        SELECT IFMULL(SUM(stock - stock_locked), 0) FROM `wms_ware_sku` WHERE sku_id IN
+        <foreach collection="skuIds" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
 
 </mapper>

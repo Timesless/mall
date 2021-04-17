@@ -7,6 +7,7 @@ dependencies {
     runtime 'mysql:mysql-connector-java:8.0.22'
 
     implementation 'commons-lang:commons-lang:2.6'
+    implementation 'com.alibaba:fastjson:1.2.72'
 
     // 排除掉低版本的springboot starter
     implementation 'org.springframework.boot:spring-boot-starter-web:2.3.5.RELEASE'

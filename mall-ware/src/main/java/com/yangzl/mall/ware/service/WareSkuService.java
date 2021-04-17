@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.yangzl.common.utils.PageUtils;
 import com.yangzl.mall.ware.entity.WareSkuEntity;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -15,6 +16,20 @@ import java.util.Map;
  */
 public interface WareSkuService extends IService<WareSkuEntity> {
 
+    /**
+     * 分页查询
+     *
+     * @param params params
+     * @return page
+     */
     PageUtils queryPage(Map<String, Object> params);
+
+    /**
+     * 获取每个 sku 的库存数
+     *
+     * @param skuIds skuids
+     * @return list
+     */
+    List<Long> getStockBySkuIds(List<Long> skuIds);
 }
 

@@ -8,6 +8,9 @@
 
 package com.yangzl.common.utils;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,15 +19,43 @@ import java.util.Map;
  *
  * @author Mark sunlightcs@gmail.com
  */
-public class R extends HashMap<String, Object> {
+public class R<E> extends HashMap<String, Object> {
 	private static final long serialVersionUID = 1L;
+
+    /**
+     * 2021年4月17日 存放带类型的数据，避免 cast
+     */
+	private E data;
 
 	public R() {
 		put("code", 0);
 		put("msg", "success");
 	}
 
-	public static R error() {
+    public E getData() {
+        return data;
+    }
+
+    /**
+     * 设置泛型数据
+     *
+     * @param data data
+     */
+    public void setData(E data) {
+        this.data = data;
+    }
+
+    /**
+     * 当前 R 是否是成功的调用
+     *
+     * @return bool
+     */
+    public boolean isSuccess() {
+        return 0 == (Integer) this.get("code");
+    }
+
+
+    public static R error() {
 		return error(Constant.SERVER_ERROR, "未知异常，请联系管理员");
 	}
 
@@ -60,4 +91,18 @@ public class R extends HashMap<String, Object> {
 		super.put(key, value);
 		return this;
 	}
+
+    /**
+     * 利用 fastjson 获取复杂类型的数据
+     *
+     * 调用示例：
+     *  构造一个匿名内部类
+     *  TypeReference<List<SkuEsTo>> typeReference = new TypeReference<List<SkuEsTo>>(){};
+     *  List<SkuEsTo> list = getData(typeReference);
+     */
+    public <T> T getTypedData(TypeReference<T> type) {
+        String s = get("data").toString();
+
+        return JSON.parseObject(s, type);
+    }
 }

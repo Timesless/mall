@@ -3,4 +3,7 @@
 dependencies {
 
     compile project(':mall-common')
+
+    // 模板引擎
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 }

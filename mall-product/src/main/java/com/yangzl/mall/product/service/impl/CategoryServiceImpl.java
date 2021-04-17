@@ -11,11 +11,15 @@ import com.yangzl.mall.product.entity.CategoryBrandRelationEntity;
 import com.yangzl.mall.product.entity.CategoryEntity;
 import com.yangzl.mall.product.service.CategoryBrandRelationService;
 import com.yangzl.mall.product.service.CategoryService;
+import com.yangzl.mall.product.vo.Category2Vo;
+import com.yangzl.mall.product.vo.Category3Vo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -72,6 +76,50 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     public Long[] findCategoryPath(Long catelogId) {
         // TODO
         return new Long[0];
+    }
+
+    @Override
+    public List<CategoryEntity> getLevel1Categories() {
+
+        return baseMapper.selectList(new QueryWrapper<CategoryEntity>().eq("parent_cid", 0));
+    }
+
+    @Override
+    public Map<String, List<Category2Vo>> getCatalogJson() {
+        /*
+         * 1. 查询 1 级分类
+         * 2. 封装数据
+         */
+        List<CategoryEntity> level1 = this.getLevel1Categories();
+        if (CollectionUtils.isEmpty(level1)) {
+            return Collections.<String, List<Category2Vo>>emptyMap();
+        }
+        Map<String, List<Category2Vo>> list = level1.stream().collect(Collectors.toMap(e1 -> e1.getCatId().toString(), e -> {
+            // v 是一级分类，要查询 1 级分类下的所有 2 级分类
+            List<CategoryEntity> l2Entity = baseMapper.selectList(new QueryWrapper<CategoryEntity>().eq("parent_cid", e.getCatId()));
+            if (CollectionUtils.isEmpty(l2Entity)) {
+                return null;
+            }
+            List<Category2Vo> vo2 = l2Entity.stream().map(e2 -> {
+                Category2Vo l2vo = new Category2Vo(e.getCatId().toString(), null, e2.getCatId().toString(), e2.getName());
+                // 二级分类查询三级分类
+                List<CategoryEntity> l3Entity = baseMapper.selectList(new QueryWrapper<CategoryEntity>().eq("parent_cid", l2vo.getCatalogId()));
+                if (CollectionUtils.isEmpty(l3Entity)) {
+                    return null;
+                }
+                List<Category3Vo> l3vo = l3Entity.stream().map(e3 -> {
+                    Category3Vo vo = new Category3Vo(l2vo.getCatalogId(), e3.getCatId().toString(), e3.getName());
+
+                    return vo;
+                }).collect(Collectors.toList());
+                l2vo.setCatalog3List(l3vo);
+                return l2vo;
+            }).collect(Collectors.toList());
+
+            return vo2;
+        }, (ov, cv) -> ov));
+
+        return list;
     }
 
     // ======================================================================================

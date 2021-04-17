@@ -49,6 +49,10 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
 
+  ## thymeleaf 开发期间关闭缓存
+  thymeleaf:
+    cache: false
+
 # mybatis-plus 配置
 mybatis-plus:
   # 默认路径 ant风格路径通配符
@@ -63,3 +67,4 @@ mybatis-plus:
 logging:
   level:
     com.yangzl.mall.product.dao: debug
+

@@ -5,10 +5,14 @@ spring:
   application:
     name: mall-gateway
 
-
   cloud:
     gateway:
       routes:
+
+        #####################################################
+        # api 接口路由配置
+        #####################################################
+
         # 测试
         - id: baidu_route
           uri: https://www.baidu.com
@@ -54,4 +58,11 @@ spring:
           filters:
             - RewritePath=/api/(?<segment>.*),/renren-fast/$\{segment}
 
-
+        ################################################################
+        # 域名路由配置
+        ################################################################
+        # host_mall
+        - id: mall_host_route
+          uri: lb://mall-product
+          predicates:
+            - Host=**.mall.com,mall.com

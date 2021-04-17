@@ -19,7 +19,7 @@ trim_trailing_whitespace = true
 [*.md]
 trim_trailing_whitespace = false
 
-[{*.yml, *.yaml}]
+[{*.yml, *.yaml, *.html, *.js}]
 indent_size = 2
 
 [gradle/verification-metadata.xml]

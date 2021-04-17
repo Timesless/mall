@@ -11,6 +11,7 @@ import com.yangzl.mall.ware.service.WareSkuService;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -38,4 +39,9 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
         return new PageUtils(page);
     }
 
+    @Override
+    public List<Long> getStockBySkuIds(List<Long> skuIds) {
+
+        return this.baseMapper.getStockBySkuIds(skuIds);
+    }
 }

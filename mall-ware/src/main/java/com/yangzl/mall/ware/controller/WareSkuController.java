@@ -4,14 +4,11 @@ import com.yangzl.common.utils.PageUtils;
 import com.yangzl.common.utils.R;
 import com.yangzl.mall.ware.entity.WareSkuEntity;
 import com.yangzl.mall.ware.service.WareSkuService;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 
@@ -36,6 +33,15 @@ public class WareSkuController {
         PageUtils page = wareSkuService.queryPage(params);
 
         return R.ok().put("page", page);
+    }
+
+    @PostMapping("/hasstock")
+    public R skusHasStock(@RequestBody List<Long> skuIds) {
+        List<Long> list = wareSkuService.getStockBySkuIds(skuIds);
+
+        R<List<Long>> r = R.<List<Long>>ok();
+        r.setData(list);
+        return r;
     }
 
 
