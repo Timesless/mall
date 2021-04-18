@@ -18,7 +18,7 @@ import java.util.Collections;
 @RefreshScope
 @RestController
 @RequestMapping("coupon/test/")
-public class TestController {
+public class NacosConfigTestController {
 
     @Value("${coupon.user.name}")
     private String name;

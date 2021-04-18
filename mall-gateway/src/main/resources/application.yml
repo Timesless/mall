@@ -22,7 +22,8 @@ spring:
         - id: product_route
           uri: lb://mall-product
           predicates:
-            - Path=/api/product/**
+            # hello 用于压测「gateway + 简单服务」
+            - Path=/api/product/**,/hello
           filters:
             - RewritePath=/api/(?<segment>/?.*),/$\{segment}
 
@@ -60,6 +61,7 @@ spring:
 
         ################################################################
         # 域名路由配置
+        # 配置在最后，不会导致上面配置的 api 路由断言失败
         ################################################################
         # host_mall
         - id: mall_host_route

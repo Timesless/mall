@@ -17,10 +17,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @MapperScan(basePackages = "com.yangzl.mall.product.dao")
 @EnableFeignClients(basePackages = "com.yangzl.mall.product.feign")
-public class ProductApplication7076 {
+public class ProductApplication8076 {
 
     public static void main(String[] args) {
-        System.setProperty("spring.profiles.active", "7076");
-        SpringApplication.run(ProductApplication7076.class, args);
+        System.setProperty("spring.profiles.active", "8076");
+        SpringApplication.run(ProductApplication8076.class, args);
     }
 }

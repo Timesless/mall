@@ -39,7 +39,7 @@ public class AttrGroupController {
     }
 
     // /product/attrgroup/{attrgroupId}/noattr/relation
-    @GetMapping("/{attrgroupId}/attr/relation")
+    @GetMapping("/{attrgroupId}/attr/noRelation")
     public R attrNoRelation(@PathVariable Long attrgroupId,
                             @RequestParam Map<String, Object> params) {
         PageUtils page = attrService.getNoRelationAttr(attrgroupId, params);
