@@ -16,6 +16,9 @@ import com.yangzl.mall.product.service.CategoryService;
 import com.yangzl.mall.product.vo.Category2Vo;
 import com.yangzl.mall.product.vo.Category3Vo;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.stereotype.Service;
@@ -73,8 +76,19 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         return level1;
     }
 
-    @Override
-    public void updateCascade(CategoryEntity category) {
+    /**
+     * 1. 级联更新 category
+     * 2. 删除缓存
+     * 要清除多个缓存时 @CacheEvict(value = "categoryCache", key = "'getLevel1Categories'") 不适用
+     * 应该使用 @Caching 注解组合
+     *
+     * @param category category
+     */
+    @Caching(evict = {
+        @CacheEvict(value = "categoryCache", key = "'getLevel1Categories'"),
+        @CacheEvict(value = "categoryCahce", key = "'getCatalogJson'")
+    })
+    @Override public void updateCascade(CategoryEntity category) {
         super.updateById(category);
         // 更新的字段中有 name 字段
         if (StringUtils.hasLength(category.getName())) {
@@ -93,49 +107,45 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         return new Long[0];
     }
 
-    @Override
-    public List<CategoryEntity> getLevel1Categories() {
+    /**
+     * 如果缓存中存在数据，则不调用方法
+     *  支持 SpEL
+     *      1. 设置过期时间
+     *      2. 自定义 key 生成
+     *  缓存 key = categoryCache + methodName
+     *
+     * @return map
+     */
+    @Cacheable(value = {"categoryCache"}, key = "#root.methodName")
+    @Override public List<CategoryEntity> getLevel1Categories() {
+        log.info("getLevel1Categories call ......");
 
         return baseMapper.selectList(new QueryWrapper<CategoryEntity>().eq("parent_cid", 0));
     }
 
     /**
-     * TODO: 压测时 Redis Lettuce 客户端导致直接内存溢出：OutOfDirectMemoryError
-     *      实际原因：Lettuce 使用 Netty 做网络通信，是 Lettuce 操作 Netty 代码 bug
-     *      -XX:MaxDirectMemorySize 默认等于 -Xmx
-     *
-     *  解决方案：
-     *      1. 使用 Jedis Client
-     *      2. 升级 Lettuce Client，当前版 Lettuce 并未抛出异常
+     * 声明式注解
      *
      * @return map
      */
-    @Override
-    public Map<String, List<Category2Vo>> getCatalogJson() {
-        /*
-         * 1. Null 缓存
-         * 2. 设置过期时间
-         * 3. db 查询加锁
-         */
-        String catalogJson = stringRedisTemplate.opsForValue().get("catalogJson");
-        if (StringUtils.hasLength(catalogJson)) {
-            return JSON.parseObject(catalogJson, new TypeReference<Map<String, List<Category2Vo>>>(){});
-        }
+    @Cacheable(value = "categoryCahce", key = "#root.methodName")
+    @Override public Map<String, List<Category2Vo>> getCatalogJson() {
 
-        return getCatalogJsonFromDB();
+        return getCatalogJsonFromDb();
     }
 
+
     /**
-     * 添加分布式锁，版本1
+     * Redis 分布式锁获取数据
      *
      * @return map
      */
-    public Map<String, List<Category2Vo>> getCatalogJsonWithDistributedLock1() {
+    public Map<String, List<Category2Vo>> getCatalogJsonWithDistributedLock() {
         String uuid = UUID.randomUUID().toString();
         // SET K V NX EX 30
         Boolean flag = stringRedisTemplate.opsForValue().setIfAbsent(REDIS_LOCK_KEY, uuid, 30, TimeUnit.SECONDS);
         if (flag) {
-            Map<String, List<Category2Vo>> rs = getCatalogJsonFromDB();
+            Map<String, List<Category2Vo>> rs = this.getCatalogJsonCacheManual();
             /*
              * 1. 解锁，确保删除自己上的锁
              * 2. 非原子性的
@@ -157,29 +167,57 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
             return rs;
         }
         // 休眠一小段时间后重试
-        try { TimeUnit.MILLISECONDS.sleep(60); } catch (InterruptedException e) { e.printStackTrace(); }
+        try { TimeUnit.MILLISECONDS.sleep(100); } catch (InterruptedException e) { e.printStackTrace(); }
 
-        return getCatalogJsonWithDistributedLock1();
+        return getCatalogJsonWithDistributedLock();
     }
 
     /**
+     * 压测时 Redis Lettuce 客户端导致直接内存溢出：OutOfDirectMemoryError
+     *      实际原因：Lettuce 使用 Netty 做网络通信，是 Lettuce 操作 Netty 代码 bug
+     *      -XX:MaxDirectMemorySize 默认等于 -Xmx
+     *
+     *  解决方案：
+     *      1. 使用 Jedis Client
+     *      2. 升级 Lettuce Client，当前版 Lettuce 并未抛出异常
+     *
+     *
      * 从 db 获取数据，加锁解决缓存穿透
      *      1. 本地锁
      *      2. 分布式锁
-     *
      *  本地锁是更好的解决方案，因为我们的目标是降低 DB 的访问，本地锁已经能过滤 95% 以上的无效请求了
      * @return map
      */
-    synchronized public Map<String, List<Category2Vo>> getCatalogJsonFromDB() {
+    public Map<String, List<Category2Vo>> getCatalogJsonCacheManual() {
 
         // 获取锁之后首先判断是否已经有缓存数据了
         String catalogJson = stringRedisTemplate.opsForValue().get("catalogJson");
         if (StringUtils.hasLength(catalogJson)) {
             return JSON.parseObject(catalogJson, new TypeReference<Map<String, List<Category2Vo>>>(){});
         }
+        Map<String, List<Category2Vo>> rs;
+        synchronized (this) {
+            // 预先查询所有分类数据，在内存操作
+            rs = getCatalogJsonFromDb();
+            // 放入缓存
+            stringRedisTemplate.opsForValue().set("catalogJson", JSON.toJSONString(rs));
+        }
 
+        return rs;
+    }
+
+
+    // ======================================================================================
+    // divide line
+    // ======================================================================================
+
+    /**
+     * 从 DB 获取分类全量数据
+     *
+     * @return map
+     */
+    private Map<String, List<Category2Vo>> getCatalogJsonFromDb() {
         log.info("......未命中缓存，执行 DB 查询");
-        // 预先查询所有分类数据，在内存操作
         List<CategoryEntity> list = baseMapper.selectList(new QueryWrapper<>());
         List<CategoryEntity> lv1 = list.stream().filter(e -> 0 == e.getParentCid()).collect(Collectors.toList());
         if (CollectionUtils.isEmpty(lv1)) {
@@ -215,15 +253,9 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
 
                 return l2vo;
             }, (ov, cv) -> cv));
-        // 放入缓存
-        stringRedisTemplate.opsForValue().set("catalogJson", JSON.toJSONString(rs));
 
         return rs;
     }
-
-    // ======================================================================================
-    // divide line
-    // ======================================================================================
 
     /**
      * 获取下一级的分类数据

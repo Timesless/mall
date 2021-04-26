@@ -57,6 +57,10 @@ spring:
     host: 127.0.0.1
     port: 6379
 
+  # 缓存配置
+  cache:
+    type: redis
+
 # mybatis-plus 配置
 mybatis-plus:
   # 默认路径 ant风格路径通配符

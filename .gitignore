@@ -25,11 +25,7 @@
 hs_err_pid*
 
 
-
 #### gradle.ignore
-
-# TODO
-renren-generator/**
 
 .gradle
 **/build/

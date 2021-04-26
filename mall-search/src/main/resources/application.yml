@@ -4,3 +4,7 @@ server:
 spring:
   application:
     name: mall-search
+
+  # thymeleaf 配置
+  thymeleaf:
+    cache: false
