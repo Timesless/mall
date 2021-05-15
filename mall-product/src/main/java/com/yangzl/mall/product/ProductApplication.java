@@ -10,7 +10,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 /**
  * @author yangzl
  * @date 2020/11/9 14:38
- * @desc 商品系统
+ *
+ * 商品系统
  *
  * 分布式缓存一致性保障：
  *     1. 双写「修改数据后，将新数据写入缓存」
@@ -40,8 +41,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  *
  *      CacheConfiguration
  *      RedisCacheConfiguration
- *
- *
  */
 @EnableDiscoveryClient
 @SpringBootApplication

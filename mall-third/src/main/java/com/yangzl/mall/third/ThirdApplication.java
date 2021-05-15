@@ -6,9 +6,13 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
+ * 第三方服务系统
+ *      oss
+ *      sms
+ *      weibo
+ *
  * @author yangzl
  * @date 2021/4/6
- * @desc
  */
 @EnableFeignClients
 @EnableDiscoveryClient

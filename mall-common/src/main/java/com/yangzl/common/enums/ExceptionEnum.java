@@ -15,6 +15,7 @@ package com.yangzl.common.enums;
  *  *      12xxx：订单业务
  *  *      13xxx：购物车业务
  *  *      14xxx：物流业务
+ *         15xxx：第三方服务
  */
 public enum ExceptionEnum {
 
@@ -26,7 +27,10 @@ public enum ExceptionEnum {
     RUNTIME_EXCEPTION(10004, "运行时异常"),
     DAO_EXCEPTION(10008, "DAO异常"),
 
-    PRODUCT_SHELVES_EXCEPTION(11001, "商品上架异常");
+    PRODUCT_SHELVES_EXCEPTION(11001, "商品上架异常"),
+
+    SMS_SEND_EXCEPTION(15001, "短信发送异常"),
+    SMS_SEND_FREQUENT(15002, "短信发送太频繁，请稍后再试");
 
     ExceptionEnum(int code, String msg) {
         this.code = code;

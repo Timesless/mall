@@ -8,7 +8,6 @@ import java.util.List;
 /**
  * @author yangzl
  * @date 2021/4/13
- * @desc
  */
 @Data
 public class Skus {

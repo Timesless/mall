@@ -11,12 +11,12 @@ server:
 # aliyun OSS 配置
 alibaba:
   cloud:
-    access-key: LTAI5t5i2CF3vnosEsZvNq83
-    secret-key: Jz90M0TyxHpx4rgnuoKiEDZuoG4dmy
+    # access-key: LTAI5t5i2CF3vnosEsZvNq83
+    # secret-key: Jz90M0TyxHpx4rgnuoKiEDZuoG4dmy
     oss:
       endpoint: oss-cn-chengdu.aliyuncs.com
 
-      buket: yangzl
+      bucket: yangzl
 
 spring:
   application:
@@ -27,9 +27,3 @@ spring:
       pool:
         core-size: 4
         max-size: 16
-
-  # nacos 配置
-  cloud:
-    nacos:
-      discovery:
-        server-addr: 127.0.0.1:8848

@@ -2,7 +2,6 @@ package com.yangzl.mall.product.feign;
 
 import com.yangzl.common.to.es.SkuEsTo;
 import com.yangzl.common.utils.R;
-import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -11,9 +10,11 @@ import java.util.List;
 /**
  * @author yangzl
  * @date 2021/4/17
- * @desc 检索服务远程调用声明
+ *
+ * 检索服务远程调用声明
  */
-@FeignClient("mall-search")
+// @FeignClient("mall-search")
+
 public interface SearchFeignService {
 
     /**

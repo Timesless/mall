@@ -3,7 +3,9 @@ package com.yangzl.mall.product.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yangzl.common.utils.PageUtils;
 import com.yangzl.mall.product.entity.AttrGroupEntity;
+import com.yangzl.mall.product.vo.SpuItemAttrGroupVo;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -30,5 +32,14 @@ public interface AttrGroupService extends IService<AttrGroupEntity> {
      * @return page
      */
     PageUtils queryPage(Map<String, Object> params, Long catelogId);
+
+    /**
+     * spu 对应所有属性分组信息 以及 分组下的所有属性对应的值
+     *
+     * @param spuId spuId
+     * @param catalogId 三级分类 id
+     * @return list
+     */
+    List<SpuItemAttrGroupVo> getAttrGroupWithAttrsBySpuId(Long spuId, Long catalogId);
 }
 

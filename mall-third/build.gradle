@@ -1,7 +1,12 @@
 
 
 dependencies {
+    compile project(':mall-common')
+
+    // aliyun oss「对象存储」
     compile 'com.alibaba.cloud:aliyun-oss-spring-boot-starter'
 
-    compile project(':mall-common')
+    // aliyun 短信服务
+    implementation 'com.aliyun:dysmsapi20170525:2.0.4'
+
 }

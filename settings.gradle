@@ -14,4 +14,5 @@ include 'mall-common'
 
 include 'renren-fast'
 include 'renren-generator'
+include 'mall-auth-server'
 

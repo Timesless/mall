@@ -6,7 +6,6 @@ import lombok.Data;
 /**
  * @author yangzl
  * @date 2021/4/7
- * @desc
  */
 @Data
 public class AttrVO {

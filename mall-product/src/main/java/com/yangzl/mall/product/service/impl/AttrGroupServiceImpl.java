@@ -7,10 +7,9 @@ import com.yangzl.common.utils.PageUtils;
 import com.yangzl.common.utils.Query;
 import com.yangzl.mall.product.dao.AttrAttrgroupRelationDao;
 import com.yangzl.mall.product.dao.AttrGroupDao;
-import com.yangzl.mall.product.entity.AttrAttrgroupRelationEntity;
-import com.yangzl.mall.product.entity.AttrEntity;
 import com.yangzl.mall.product.entity.AttrGroupEntity;
 import com.yangzl.mall.product.service.AttrGroupService;
+import com.yangzl.mall.product.vo.SpuItemAttrGroupVo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -18,17 +17,13 @@ import org.springframework.util.StringUtils;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * 属性分组
  *
  * @author yangzl
  * @date 2020/11/19 20:27:08
- * @desc
  */
-
 @Service("attrGroupService")
 @Transactional(rollbackFor = Exception.class)
 public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEntity> implements AttrGroupService {
@@ -64,4 +59,11 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
         return new PageUtils(page);
     }
 
+    @Override
+    public List<SpuItemAttrGroupVo> getAttrGroupWithAttrsBySpuId(Long spuId, Long catalogId) {
+        // 1. 当前 spu 对应的所有属性分组
+        // 2. pms_attr_group 根据三级分类查组
+
+        return baseMapper.getAttrGroupWithAttrsBySpuId(spuId, catalogId);
+    }
 }

@@ -10,8 +10,8 @@ server:
 
 alibaba:
   cloud:
-    access-key: LTAI5t5i2CF3vnosEsZvNq83
-    secret-key: Jz90M0TyxHpx4rgnuoKiEDZuoG4dmy
+    # access-key: LTAI5t5i2CF3vnosEsZvNq83
+    # secret-key: Jz90M0TyxHpx4rgnuoKiEDZuoG4dmy
     oss:
       endpoint: oss-cn-chengdu.aliyuncs.com
 
@@ -37,6 +37,9 @@ spring:
       pool:
         core-size: 8
         max-size: 32
+        queue-capacity: 256
+        keep-alive: 60s
+
 
   # cloud 配置
   cloud:

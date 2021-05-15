@@ -1,7 +1,6 @@
 package com.yangzl.mall.product.feign;
 
 import com.yangzl.common.utils.R;
-import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -12,7 +11,8 @@ import java.util.List;
  * @date 2021/4/17
  * @desc
  */
-@FeignClient("mall-ware")
+// @FeignClient("mall-ware")
+
 public interface WareFeignService {
 
     /**

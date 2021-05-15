@@ -1,0 +1,9 @@
+server:
+  port: 10000
+
+spring:
+  application:
+    name: mall-auth
+
+  thymeleaf:
+    cache: false
