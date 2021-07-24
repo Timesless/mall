@@ -1,7 +1,5 @@
 package com.yangzl.auth.service.impl;
 
-import com.yangzl.auth.feign.ThirdFeignService;
-import com.yangzl.auth.service.MessageService;
 import com.yangzl.common.enums.ExceptionEnum;
 import com.yangzl.common.utils.R;
 import org.springframework.data.redis.core.StringRedisTemplate;

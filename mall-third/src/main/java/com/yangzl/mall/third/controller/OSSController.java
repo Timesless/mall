@@ -4,7 +4,6 @@ import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.common.utils.BinaryUtil;
 import com.aliyun.oss.model.MatchMode;
 import com.aliyun.oss.model.PolicyConditions;
-import com.yangzl.mall.third.constant.StringConstant;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -71,7 +70,7 @@ public class OSSController {
             String postSignature = ossClient.calculatePostSignature(postPolicy);
 
             Map<String, String> respMap = new LinkedHashMap<>(8);
-            respMap.put("accessid", StringConstant.ALIYUN_ACCESS_KEY);
+            // respMap.put("accessid", StringConstant.ALIYUN_ACCESS_KEY);
             respMap.put("policy", encodedPolicy);
             respMap.put("signature", postSignature);
             respMap.put("dir", dir);
